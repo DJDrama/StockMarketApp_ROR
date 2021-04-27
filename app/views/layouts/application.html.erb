@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Stock Market App</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -11,11 +12,9 @@
 </head>
 
 <body>
-
-
 <%= render 'home/navbar' %>
 <div class="container">
-
+  <br/>
   <%= yield %>
 </div>
 </body>
