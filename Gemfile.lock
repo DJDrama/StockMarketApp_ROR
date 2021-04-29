@@ -245,7 +245,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   sqlite3 (~> 1.4)
-  stock_quote (~> 3.0)
+  stock_quote (~> 3.0.0)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
