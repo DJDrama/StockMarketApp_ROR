@@ -17,20 +17,23 @@
     <% if current_user.id == stock.user_id %>
 
       <% if stock.ticker == "" %>
-        <% @nothing = "N/A" %>
+        <% @ticker.company_name = 'N/A' %>
+        <% @ticker.latest_price = 'N/A' %>
+        <% @ticker.symbol = 'N/A' %>
       <% elsif stock.ticker %>
         <% begin %>
           <% @ticker = StockQuote::Stock.quote(stock.ticker) %>
         <% rescue %>
-          <% @error = "N/A" %>
+          <% @ticker.company_name = 'N/A' %>
+          <% @ticker.latest_price = 'N/A' %>
+          <% @ticker.symbol = 'N/A' %>
         <% end %>
       <% end %>
-
 
       <tr>
         <td><%= @ticker.company_name %></td>
         <td><%= @ticker.symbol %></td>
-        <td>$<%= @ticker.latest_price %></td>
+        <td>$<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %></td>
         <td><%= link_to 'Show', stock %></td>
         <td><%= link_to 'Edit', edit_stock_path(stock) %></td>
         <td><%= link_to 'Destroy', stock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
