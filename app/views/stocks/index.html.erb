@@ -13,19 +13,13 @@
   <tbody>
   <% @stocks.each do |stock| %>
     <% if current_user.id == stock.user_id %>
-
-      <% if stock.ticker == "" %>
+      <% begin %>
+        <% @ticker = StockQuote::Stock.quote(stock.ticker) %>
+      <% rescue %>
         <% @ticker.company_name = 'N/A' %>
         <% @ticker.latest_price = 'N/A' %>
         <% @ticker.symbol = 'N/A' %>
-      <% elsif stock.ticker %>
-        <% begin %>
-          <% @ticker = StockQuote::Stock.quote(stock.ticker) %>
-        <% rescue %>
-          <% @ticker.company_name = 'N/A' %>
-          <% @ticker.latest_price = 'N/A' %>
-          <% @ticker.symbol = 'N/A' %>
-        <% end %>
+        <% @ticker.market_cap = 'N/A' %>
       <% end %>
 
       <tr>
@@ -33,8 +27,12 @@
         <td><%= @ticker.symbol %></td>
         <td>$<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %></td>
         <td>$<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %></td>
-        <td><center><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-secondary" %></center></td>
-        <td><center><%= link_to 'Delete', stock, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></center></td>
+        <td>
+          <center><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-secondary" %></center>
+        </td>
+        <td>
+          <center><%= link_to 'Delete', stock, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></center>
+        </td>
       </tr>
     <% end %>
   <% end %>
