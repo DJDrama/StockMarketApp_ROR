@@ -64,7 +64,7 @@ class StocksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # Use callbacks to share com∂mon setup or constraints between actions.
     def set_stock
       @stock = Stock.find(params[:id])
     end
