@@ -1,14 +1,25 @@
 <!--<p id="notice"><%#= notice %></p>-->
 
-<p>
-  <strong>Ticker:</strong>
-  <%= @stock.ticker %>
-</p>
 
-<!--<p>-->
-<!--  <strong>User:</strong>-->
-  <%#= @stock.user_id %>
-<!--</p>-->
 
+<% @ticker = StockQuote::Stock.quote(@stock.ticker) %>
+<% if @ticker.nil? %>
+  The ticker: <%= @ticker %><br/> does not exist!
+
+<% else %>
+  <strong><%= @ticker.company_name %></strong><br/>
+  Ticker Symbol: <%= @ticker.symbol %><br/>
+  Current Price: $<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %><br/>
+  Previous Close: $<%= number_with_precision(@ticker.previous_close, :precision => 2, :delimiter => ',') %><br/>
+  Change Percent: <%= number_with_precision(@ticker.change_percent, :precision => 2, :delimiter => ',') %>%<br/>
+  YTD Change: <%= number_with_precision(@ticker.ytd_change, :precision => 2, :delimiter => ',') %>%<br/>
+  Market Cap: $<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %><br/>
+
+<% end %>
+
+
+
+
+<br/><br/>
 <%= link_to 'Edit', edit_stock_path(@stock) %> |
 <%= link_to 'Back', stocks_path %>
